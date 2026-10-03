@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Reporte de Quiniela</title>
+    <style>
+        @page {
+    /* Cambia la página a horizontal y ajusta márgenes */
+    size: A4 landscape; /* o 'letter landscape' */
+    margin: 10mm;
+}
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            color: #333333;
+            line-height: 1.4;
+        }
+        h1 {
+            color: #1a365d;
+            margin-bottom: 5px;
+            font-size: 24px;
+        }
+        .descripcion {
+            font-size: 14px;
+            color: #4a5568;
+            margin-bottom: 25px;
+        }
+        table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Ayuda a distribuir proporcionalmente el ancho */
+}
+
+th, td {
+    font-size: 9px;       /* Reduce la letra para que quepan más columnas */
+    padding: 3px 2px;     /* Reduce el espacio interno */
+    text-align: center;
+    word-wrap: break-word; /* Fuerza el salto de línea en textos largos */
+}
+
+th {
+    font-size: 8.5px;     /* Letra ligeramente más pequeña para las cabeceras */
+}
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 th:text="${titulo}">Título del Reporte</h1>
+    <p class="descripcion" th:text="${descripcion}">Este es el texto descriptivo del reporte.</p>
+
+    <table>
+        <thead>
+            <tr>
+            	<td>Papeleta</td>
+            	<th th:each="partido : ${partidos}" th:text="${partido}">
+		            Nombre del Partido
+		        </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="papeleta : ${papeletas}">
+                <td th:text="|${papeleta.jugador.nickname} (${papeleta.idPapeleta})|">Usuario(idPapeleta)</td>
+                
+                <td th:each="casilla : ${papeleta.casillas}" 
+                    th:text="${casilla.prediccion}">
+                    Local / Empate / Visita
+                </td>
+                
+                
+                <td th:text="${papeleta.puntos}">puntos</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
