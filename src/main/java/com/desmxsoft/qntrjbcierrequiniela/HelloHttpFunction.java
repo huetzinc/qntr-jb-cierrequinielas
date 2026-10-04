@@ -8,7 +8,7 @@ import com.google.cloud.functions.HttpResponse;
 
 public class HelloHttpFunction implements HttpFunction {
   public void service(final HttpRequest request, final HttpResponse response) throws Exception {
-    System.out.println("ejecutando function Hello");
+    System.out.println("ejecutando function Hello Eclipse; Versión: 2610041047");
     final BufferedWriter writer = response.getWriter();
     writer.write("Hello world!");
   }
