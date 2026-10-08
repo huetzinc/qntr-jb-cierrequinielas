@@ -9,3 +9,6 @@ steps:
 
 images:
   - 'us-west2-docker.pkg.dev/quinielator/desmxsoft-qntr/qntr-jb-cierrequiniela:$COMMIT_SHA'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
