@@ -1,0 +1,11 @@
+steps:
+  # Compilación con Maven usando la imagen con autenticación nativa
+  - name: 'gcr.io/cloud-builders/mvn'
+    args: ['clean', 'package', '-DskipTests']
+
+  # Construcción de la imagen de Docker
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-west2-docker.pkg.dev/quinielator/desmxsoft-qntr/qntr-jb-cierrequiniela:$COMMIT_SHA', '.']
+
+images:
+  - 'us-west2-docker.pkg.dev/quinielator/desmxsoft-qntr/qntr-jb-cierrequiniela:$COMMIT_SHA'
