@@ -1,119 +1,182 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.desmxsoft</groupId>
-  <artifactId>qntr-jb-cierrequiniela</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <description>Job que se ejecuta para cerrar una quiniela</description>
-  
-  <properties>
-      <java.version>21</java.version>
-      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <spring-boot.version>3.2.5</spring-boot.version>
-  </properties>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <dependencyManagement>
-      <dependencies>
-          <dependency>
-              <groupId>org.springframework.boot</groupId>
-              <artifactId>spring-boot-dependencies</artifactId>
-              <version>${spring-boot.version}</version>
-              <type>pom</type>
-              <scope>import</scope>
-          </dependency>
-      </dependencies>
-  </dependencyManagement>
+    <modelVersion>4.0.0</modelVersion>
 
-  <dependencies>
-      <dependency>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter</artifactId>
-      </dependency>
+    <!-- Información del proyecto -->
+    <groupId>com.desmxsoft</groupId>
+    <artifactId>qntr-jb-cierrequiniela</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-      <dependency>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-thymeleaf</artifactId>
-      </dependency>
+    <name>qntr-jb-cierrequiniela</name>
+    <description>Job que se ejecuta para cerrar una quiniela</description>
 
-      <dependency>
-          <groupId>com.openhtmltopdf</groupId>
-          <artifactId>openhtmltopdf-core</artifactId>
-          <version>1.0.10</version>
-      </dependency>
-      <dependency>
-          <groupId>com.openhtmltopdf</groupId>
-          <artifactId>openhtmltopdf-pdfbox</artifactId>
-          <version>1.0.10</version>
-      </dependency>
+    <!-- Parent de Spring Boot -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.5</version>
+        <relativePath/>
+    </parent>
 
-      <!-- DTO / Acceso a datos privado -->
-      <dependency>
-          <groupId>com.desmxsoft</groupId>
-          <artifactId>qntr-dt-oracle</artifactId>
-          <version>1.0.14</version>
-      </dependency>
+    <!-- Propiedades -->
+    <properties>
+        <java.version>21</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-cloud.version>2023.0.1</spring-cloud.version>
+    </properties>
 
-      <dependency>
-          <groupId>com.desmxsoft</groupId>
-          <artifactId>qntr-utils</artifactId>
-          <version>1.0.7</version>
-      </dependency>
+    <!-- Gestión de versiones de Spring Cloud -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-      <dependency>
-          <groupId>org.javassist</groupId>
-          <artifactId>javassist</artifactId>
-          <version>3.29.2-GA</version>
-      </dependency>
-		
-      <dependency>
-          <groupId>com.google.cloud.functions</groupId>
-          <artifactId>functions-framework-api</artifactId>
-          <version>1.1.4</version>
-      </dependency>
-  </dependencies>
-	
-  <repositories>
-      <repository>
-          <id>artifact-registry</id>
-          <url>artifactregistry://us-west2-maven.pkg.dev/quinielator/desmxsoft-qntr</url>
-          <releases>
-              <enabled>true</enabled>
-          </releases>
-          <snapshots>
-              <enabled>false</enabled>
-          </snapshots>
-      </repository>
-  </repositories>
+    <!-- Dependencias -->
+    <dependencies>
 
-  <build>
-      <extensions>
-          <extension>
-              <groupId>com.google.cloud.artifactregistry</groupId>
-              <artifactId>artifactregistry-maven-wagon</artifactId>
-              <version>2.2.1</version>
-          </extension>
-   </extensions>
-   
-      <plugins>
-          <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-compiler-plugin</artifactId>
-              <version>3.13.0</version>
-              <configuration>
-                  <source>21</source>
-                  <target>21</target>
-              </configuration>
-          </plugin>
+        <!-- Spring Boot: aplicación web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
-          <plugin>
-              <groupId>com.google.cloud.functions</groupId>
-              <artifactId>function-maven-plugin</artifactId>
-              <version>0.11.0</version>
-              <configuration>
-                  <mainClass>com.desmxsoft.qntrjbcierrequiniela.HelloHttpFunction</mainClass>
-              </configuration>
-          </plugin>
-      </plugins>
-  </build>
+        <!-- Spring Cloud: Eureka -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <!-- Spring Cloud: Config Server -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
+        <!-- Monitoreo -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- Plantillas HTML -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- Generación de PDF -->
+        <dependency>
+            <groupId>com.openhtmltopdf</groupId>
+            <artifactId>openhtmltopdf-core</artifactId>
+            <version>1.0.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.openhtmltopdf</groupId>
+            <artifactId>openhtmltopdf-pdfbox</artifactId>
+            <version>1.0.10</version>
+        </dependency>
+
+        <!-- DTO y acceso a datos privado -->
+        <dependency>
+            <groupId>com.desmxsoft</groupId>
+            <artifactId>qntr-dt-oracle</artifactId>
+            <version>1.0.14</version>
+        </dependency>
+
+        <!-- Utilerías privadas -->
+        <dependency>
+            <groupId>com.desmxsoft</groupId>
+            <artifactId>qntr-utils</artifactId>
+            <version>1.0.7</version>
+        </dependency>
+
+        <!-- Reflexión y manipulación de bytecode -->
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.29.2-GA</version>
+        </dependency>
+
+        <!-- API Servlet heredada: conservar solo si el código la necesita -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Pruebas -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <!-- Repositorio privado de Google Artifact Registry -->
+    <repositories>
+        <repository>
+            <id>artifact-registry</id>
+            <url>artifactregistry://us-west2-maven.pkg.dev/quinielator/desmxsoft-qntr</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <!-- Construcción -->
+    <build>
+
+        <!-- Acceso Maven a Artifact Registry -->
+        <extensions>
+            <extension>
+                <groupId>com.google.cloud.artifactregistry</groupId>
+                <artifactId>artifactregistry-maven-wagon</artifactId>
+                <version>2.2.1</version>
+            </extension>
+        </extensions>
+
+        <plugins>
+
+            <!-- Compilación con Java 21 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <release>${java.version}</release>
+                </configuration>
+            </plugin>
+
+            <!-- Generación del JAR ejecutable de Spring Boot -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+        </plugins>
+    </build>
+
 </project>

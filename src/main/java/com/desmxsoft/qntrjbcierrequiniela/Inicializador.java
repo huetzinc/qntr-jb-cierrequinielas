@@ -8,7 +8,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import com.desmxsoft.qntrdtoracle.dao.impl.CierreQuinielaDAOImpl;
 import com.desmxsoft.qntrdtoracle.dao.impl.ViewQuinielaFullDAOImpl;
 import com.desmxsoft.qntrdtoracle.dto.CierreQuinielaDTO;
-import com.desmxsoft.qntrdtoracle.dto.QuinielaDTO;
 import com.desmxsoft.qntrdtoracle.dto.ViewQuinielaFullDTO;
 
 
@@ -16,6 +15,7 @@ public class Inicializador {
 	
 	public static AnnotationConfigApplicationContext appContext;
 
+	/*
     public static void main(String[] args) {
         System.out.println("VPMF; Planes y trabajos");
         appContext = new AnnotationConfigApplicationContext();
@@ -47,7 +47,7 @@ public class Inicializador {
           //enviar email
             
         }
-    }
+    }*/
 
 
 }
